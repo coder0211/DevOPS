@@ -141,7 +141,7 @@ const ServerDetails = () => {
                 <div key={domain.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                         <h4 style={{ margin: 0 }}>{domain.name}</h4>
-                        <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>PROXY -> LOCALHOST:{domain.target_port}</p>
+                        <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>{'PROXY -> LOCALHOST:'}{domain.target_port}</p>
                     </div>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         <button style={{ padding: '0.4rem', boxShadow: '2px 2px 0px #000' }}><Trash2 size={16} /></button>

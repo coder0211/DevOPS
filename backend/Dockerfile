@@ -1,12 +1,14 @@
 # =====================================================
 # Stage 1: Builder
 # =====================================================
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /app
 
 # Install build dependencies for SQLite (cgo)
 RUN apk add --no-cache gcc musl-dev
+
+ENV GOTOOLCHAIN=auto
 
 # Download dependencies first (layer cache)
 COPY go.mod go.sum ./
