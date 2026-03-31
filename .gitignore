@@ -1,0 +1,44 @@
+# =============================================================================
+# DevOPS VPS Manager — .gitignore
+# =============================================================================
+
+# ─── Go / Backend ─────────────────────────────────────────────────────────────
+backend/devops-manager
+backend/devops.db
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+
+# ─── Node / Frontend ──────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# ─── Environment & Secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# SSH Keys — NEVER commit private keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+id_ecdsa
+authorized_keys
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+# (docker-compose.yml and Dockerfiles ARE committed)
+
+# ─── OS & Editor ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.iml
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/

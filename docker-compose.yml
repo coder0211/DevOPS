@@ -1,0 +1,51 @@
+services:
+  # =====================================================
+  # Backend — Go API + SSH Engine
+  # =====================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devops_backend
+    restart: unless-stopped
+    environment:
+      - GIN_MODE=release
+      - DATA_DIR=/app/data
+    volumes:
+      # Persist the SQLite database
+      - backend_data:/app/data
+      # Mount host SSH keys so the backend can connect to VPS servers
+      - ${SSH_KEY_DIR:-~/.ssh}:/root/.ssh:ro
+    networks:
+      - devops_net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/servers"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # =====================================================
+  # Frontend — React + Nginx
+  # =====================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: devops_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - devops_net
+
+volumes:
+  backend_data:
+    name: devops_backend_data
+
+networks:
+  devops_net:
+    name: devops_network
+    driver: bridge
